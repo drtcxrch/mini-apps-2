@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import ReactPaginate from 'react-paginate';
 
 const App = () => {
   return (
     <div>
-      <div>Welcome to my-webpack-react-starter</div>
+      <div>Does this change?</div>
     </div>
   );
 };
