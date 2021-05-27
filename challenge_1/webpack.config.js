@@ -1,6 +1,7 @@
 const path = require('path');
 const autoprefixer = require('autoprefixer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { SourceMapDevToolPlugin } = require("webpack");
 
 module.exports = {
   entry: './index.js',
@@ -11,8 +12,15 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx']
   },
+  mode: 'development',
+  devtool: 'inline-source-map',
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader'],
+      },
       {
         test: /\.(js|jsx)$/,
         use: ['babel-loader'],
@@ -35,6 +43,9 @@ module.exports = {
       template: __dirname + '/public/index.html',
       filename: 'index.html',
       inject: 'body'
+    }),
+    new SourceMapDevToolPlugin({
+      filename: "[file].map"
     })
   ]
 };
