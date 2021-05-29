@@ -6,49 +6,72 @@ import ReactPaginate from 'react-paginate';
 
 export default class App extends React.Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       events: [],
+      pageCount: 0,
+      searchText: ''
     };
 
     this.loadEvents = this.loadEvents.bind(this);
-    this.handlePageClick = this.handlePageClick.bind(this);
+    // this.handlePageClick = this.handlePageClick.bind(this);
     this.search = this.search.bind(this);
     this.searchTextOnChange = this.searchTextOnChange.bind(this);
   }
 
-  loadEvents(page, query) {
-    console.log(this.props.url`?_page=${page}&_limit=${this.props.perPage}&q=${query}`)
-    fetch(this.props.url`?_page=${page}&_limit=${this.props.perPage}&q=${query}`)
+  loadEvents(query, page) {
+    fetch(`http://localhost:3000/events?_page=${page}&_limit=10&q=${query}`)
       .then((result) => {
-        console.log(result.json());
+        this.setState({ pageCount: Math.ceil(Number(result.headers.get('X-Total-Count')) / 10) })
+        return result.json()
       })
-      .catch((err) => console.log('Error: err'));
+      .then((data) => {
+        this.setState({
+          events: data,
+        })
+      })
+      .catch((err) => console.error(err));
   }
 
-  handlePageClick(e) {
-    console.log(e.selected);
-    this.loadEvents(e.selected + 1, this.state.searchText)
-  };
+  // handlePageClick(e) {
+  //   console.log(e.selected);
+  //   this.loadEvents(this.state.searchText, e.selected + 1)
+  // };
 
   search(e) {
     e.preventDefault();
-    this.loadEvents(0, this.state.searchText);
+    this.loadEvents(this.state.searchText, 1);
   }
 
   searchTextOnChange(e) {
+    console.log(e.target.value);
     this.setState({searchText: e.target.value});
   }
+
+  // componentDidMount() {
+
+  //   this.loadEvents('Pilgrims', 1)
+  // }
 
   render () {
     return (
       <div>
+        <button onClick={() => console.log('click')}>CLick</button>
         <h1>Historical Events Finder</h1>
-        <form onSubmit={this.search}>
+        <form onSubmit={this.search} >
           <label htmlFor="search">Search Event Keywords</label>
-          <input onChange={this.searchTextOnChange} name="search" value={this.state.searchText}></input>
-          <button type="submit">Search</button>
+          <input
+            type="text"
+            id="searchText"
+            name="searchText"
+            value={this.state.searchText}
+            onChange={this.searchTextOnChange}
+            />
+          <input
+            type="submit"
+            value="Submit"
+            />
         </form>
         <Events events={this.state.events} />
         <ReactPaginate
@@ -69,8 +92,4 @@ export default class App extends React.Component {
 
 };
 
-App.propTypes = {
-  url: PropTypes.string.isRequired,
-  perPage: PropTypes.number.isRequired,
-};
 

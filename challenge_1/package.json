@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open --hot --mode development",
     "build": "webpack --config webpack.config.js",
-    "json": "json-server --watch ./data/db.json"
+    "json": "json-server --watch ./data/db.json",
+    "serve": "webpack serve --mode development"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +30,8 @@
     "webpack-cli": "^4.7.0"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.14.3",
+    "@babel/runtime-corejs2": "^7.14.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-paginate": "^7.1.3",
