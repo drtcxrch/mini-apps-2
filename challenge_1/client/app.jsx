@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Events from './events.jsx';
-import { Table } from 'react-bootstrap';
 import './styles.css';
 import ReactPaginate from 'react-paginate';
 
@@ -50,16 +49,6 @@ export default class App extends React.Component {
     console.log(e.target.value);
     this.setState({searchText: e.target.value});
   }
-
-  // componentDidMount() {
-
-  //   this.loadEvents('Pilgrims', 1)
-  // }
-  // pagination() {
-  //   if (pageCount > 0) {
-
-  //   }
-  // }
 
   render () {
     return (

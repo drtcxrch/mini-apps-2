@@ -14,9 +14,3 @@ export default class Events extends React.Component {
     );
   }
 }
-
-Events.propTypes = {
-  events: PropTypes.array.isRequired
-}
-
-// export default Events;
