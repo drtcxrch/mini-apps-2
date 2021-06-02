@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Events from './events.jsx';
+import { Table } from 'react-bootstrap';
+import './styles.css';
 import ReactPaginate from 'react-paginate';
 
 export default class App extends React.Component {
@@ -15,7 +17,7 @@ export default class App extends React.Component {
     };
 
     this.loadEvents = this.loadEvents.bind(this);
-    // this.handlePageClick = this.handlePageClick.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
     this.search = this.search.bind(this);
     this.searchTextOnChange = this.searchTextOnChange.bind(this);
   }
@@ -34,10 +36,10 @@ export default class App extends React.Component {
       .catch((err) => console.error(err));
   }
 
-  // handlePageClick(e) {
-  //   console.log(e.selected);
-  //   this.loadEvents(this.state.searchText, e.selected + 1)
-  // };
+  handlePageClick(e) {
+    console.log(e.selected);
+    this.loadEvents(this.state.searchText, e.selected + 1)
+  };
 
   search(e) {
     e.preventDefault();
@@ -53,39 +55,48 @@ export default class App extends React.Component {
 
   //   this.loadEvents('Pilgrims', 1)
   // }
+  // pagination() {
+  //   if (pageCount > 0) {
+
+  //   }
+  // }
 
   render () {
     return (
-      <div>
-        <button onClick={() => console.log('click')}>CLick</button>
-        <h1>Historical Events Finder</h1>
-        <form onSubmit={this.search} >
-          <label htmlFor="search">Search Event Keywords</label>
-          <input
-            type="text"
-            id="searchText"
-            name="searchText"
-            value={this.state.searchText}
-            onChange={this.searchTextOnChange}
-            />
-          <input
-            type="submit"
-            value="Submit"
-            />
-        </form>
+      <div >
+        <div id="form">
+          <h1>Historical Events Finder</h1>
+          <form onSubmit={this.search} >
+            <label htmlFor="search">Search Event Keywords: </label>
+            <input
+              type="text"
+              id="searchText"
+              name="searchText"
+              value={this.state.searchText}
+              onChange={this.searchTextOnChange}
+              />
+            <input
+              type="submit"
+              value="Submit"
+              />
+          </form>
+        </div>
         <Events events={this.state.events} />
-        <ReactPaginate
-          previousLabel={'Prev'}
-          nextLabel={'Next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-        />
+        <div id="paginate">
+          {this.state.pageCount > 0 &&
+            <ReactPaginate
+            previousLabel={'Prev'}
+            nextLabel={'Next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            activeClassName={'active'}
+          />}
+        </div>
       </div>
     );
   }
