@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import Prices from './Prices.jsx';
 import Chart from './Chart.jsx';
 
 class App extends React.Component {
