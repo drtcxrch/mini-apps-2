@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import Prices from './Prices.jsx';
+// import Prices from './Prices.jsx';
+import Chart from './Chart.jsx';
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      bpi: [],
+      dates: [],
+      prices: [],
       disclaimer: '',
       time: {}
     }
@@ -21,14 +23,12 @@ class App extends React.Component {
       .then((data) => {
         console.log(data.bpi);
         let bpiData = data.bpi;
-        let formatted = [];
-        for (var date in bpiData) {
-          var bpiOnDate = {};
-          bpiOnDate[date] = bpiData[date];
-          formatted.push(bpiOnDate);
-        }
+        let dates = Object.keys(bpiData);
+        let prices = Object.values(bpiData);
+
        this.setState({
-         bpi: formatted,
+         dates: dates,
+         prices: prices,
          disclaimer: data.disclaimer,
          time: data.time
        })
@@ -40,7 +40,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>Bitcoin Prices as of {this.state.time.updated}</h1>
-        <Prices bpi={this.state.bpi} />
+        <Chart dates={this.state.dates} prices={this.state.prices} />
         <footer>{this.state.disclaimer}</footer>
       </div>
     )
