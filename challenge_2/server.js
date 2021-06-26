@@ -6,15 +6,15 @@ const path = require("path");
 app.use(express.static(path.join(__dirname, "..", "client")));
 app.use(express.static("public"));
 
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "..", "public", "index.html"));
-});
+// app.use((req, res, next) => {
+//   res.sendFile(path.join(__dirname, "..", "public", "index.html"));
+// });
 
 app.get('/', (req, res) => {
   res.status(200).end();
 })
 
 // start express server on port 3000
-app.listen(3000, () => {
-  console.log("server started on port 3000");
+app.listen(4000, () => {
+  console.log("server started on port 4000");
 });
