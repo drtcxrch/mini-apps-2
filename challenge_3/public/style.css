@@ -13,3 +13,16 @@ table.scorecard tr td:not(:last-child) {border-right:1px solid;}
 table.scorecard tr:nth-child(2) td:nth-child(even) {border-bottom:1px solid;}
 
 table.scorecard tr:nth-child(2) td:last-child {border-bottom:1px solid;}
+
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.roll-score {
+  margin-left:5px;
+  margin-right: 5px;
+}
+
