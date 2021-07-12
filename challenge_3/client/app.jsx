@@ -6,43 +6,61 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
+      pinsStanding: 10,
       score: 0,
-      roll_1: 0,
-      roll_2: 0,
-      isStrike: false,
-      isSpare: false,
-      isRoll_1: true
+      currentFrame: 1
     }
 
-    this.bowl = this.bowl.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.bowlOnChange = this.bowlOnChange.bind(this);
+    this.handleBowlChange = this.handleBowlChange.bind(this);
   }
 
-  bowl() {
+  handleSubmit(e) {
+    e.preventDefault();
+    this.form.reset();
 
   }
 
-  handleSubmit() {
+  handleBowlChange(e) {
+    // debugger;
+    var bowl = e.target.value;
+    var frame = `frame_${this.state.currentFrame}`;
+    var currentFrame = this.state.currentFrame;
+    console.log(frame);
 
-  }
+    if (!this.state.[frame]) {
+      this.setState({[frame]: {roll_1: bowl}}, () => console.log(this.state))
+    } else {
+      console.log(this.state.[frame]);
+      this.setState({[frame]: {...this.state.[frame], roll_2: bowl}}, () => {
+        var newFrame = this.state.currentFrame + 1;
+        console.log(this.state.currentFrame, newFrame);
+        this.setState({currentFrame: newFrame }, () => {
+          frame = `frame_${this.state.currentFrame + 1}`;
+          console.log(frame);
+          console.log(this.state)});
+      });
 
-  bowlOnChange() {
+    }
 
   }
 
   render () {
+    var frames = Object.fromEntries(Object.entries(this.state).filter(([key, value]) => key.slice(0, 5) === 'frame'));
+
     return (
       <div>
         <div className="form-container">
-          <form onSubmit={this.bowl}>
+          <form ref={form => this.form = form}
+          onSubmit={this.handleSubmit}>
             <label>
               Bowl:
             <input
               type="text"
               className="roll-score"
               placeholder="Enter Pin Count Here"
-              value={this.bowlOnChange}
+              value={`this.state.frames.frame_${this.state.currentFrame}`.roll_1 === null ? `this.state.frames.frame_${this.state.currentFrame}`.roll_1 : `this.state.frames.frame_${this.state.currentFrame}`.roll_2}
+              onChange={this.handleBowlChange}
               />
             </label>
             <input
@@ -51,7 +69,7 @@ class App extends React.Component {
               />
           </form>
         </div>
-        <Table />
+        <Table score={frames}/>
       </div >
     )
   }
