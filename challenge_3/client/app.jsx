@@ -22,22 +22,17 @@ class App extends React.Component {
   }
 
   handleBowlChange(e) {
-    // debugger;
     var bowl = e.target.value;
     var frame = `frame_${this.state.currentFrame}`;
     var currentFrame = this.state.currentFrame;
-    console.log(frame);
 
     if (!this.state.[frame]) {
       this.setState({[frame]: {roll_1: bowl}}, () => console.log(this.state))
     } else {
-      console.log(this.state.[frame]);
       this.setState({[frame]: {...this.state.[frame], roll_2: bowl}}, () => {
         var newFrame = this.state.currentFrame + 1;
-        console.log(this.state.currentFrame, newFrame);
         this.setState({currentFrame: newFrame }, () => {
           frame = `frame_${this.state.currentFrame + 1}`;
-          console.log(frame);
           console.log(this.state)});
       });
 
