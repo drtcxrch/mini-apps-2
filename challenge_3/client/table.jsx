@@ -72,16 +72,16 @@ const Table = (props) => {
           </td>
         </tr>
         <tr>
-          <td colSpan='6' id="marker0">{score.frame_1 && score.frame_1.roll_1 && score.frame_1.roll_2?   Number(score.frame_1.roll_1) + Number(score.frame_1.roll_2) : null}</td>
-          <td colSpan='6' id="marker1">{score.frame_2 ? score.frame_2.roll_1 : null}</td>
-          <td colSpan='6' id="marker2">{score.frame_3 ? score.frame_3.roll_1 : null}</td>
-          <td colSpan='6' id="marker3">{score.frame_4 ? score.frame_4.roll_1 : null}</td>
-          <td colSpan='6' id="marker4">{score.frame_5 ? score.frame_5.roll_1 : null}</td>
-          <td colSpan='6' id="marker5">{score.frame_6 ? score.frame_6.roll_1 : null}</td>
-          <td colSpan='6' id="marker6">{score.frame_7 ? score.frame_7.roll_1 : null}</td>
-          <td colSpan='6' id="marker7">{score.frame_8 ? score.frame_8.roll_1 : null}</td>
-          <td colSpan='6' id="marker8">{score.frame_9 ? score.frame_9.roll_1 : null}</td>
-          <td colSpan='6' id="marker9">{score.frame_10 ? score.frame_10.roll_1 : null}</td>
+          <td colSpan='6' id="marker0">{score.frame_1 && score.frame_1.frameScore ? score.frame_1.frameScore : null}</td>
+          <td colSpan='6' id="marker1">{score.frame_2 && score.frame_2.frameScore ? score.frame_2.frameScore : null}</td>
+          <td colSpan='6' id="marker2">{score.frame_3 && score.frame_3.frameScore ? score.frame_3.frameScore : null}</td>
+          <td colSpan='6' id="marker3">{score.frame_4 && score.frame_4.frameScore ? score.frame_4.frameScore : null}</td>
+          <td colSpan='6' id="marker4">{score.frame_5 && score.frame_5.frameScore ? score.frame_5.frameScore : null}</td>
+          <td colSpan='6' id="marker5">{score.frame_6 && score.frame_6.frameScore ? score.frame_6.frameScore : null}</td>
+          <td colSpan='6' id="marker6">{score.frame_7 && score.frame_7.frameScore ? score.frame_7.frameScore : null}</td>
+          <td colSpan='6' id="marker7">{score.frame_8 && score.frame_8.frameScore ? score.frame_8.frameScore : null}</td>
+          <td colSpan='6' id="marker8">{score.frame_9 && score.frame_9.frameScore ? score.frame_9.frameScore : null}</td>
+          <td colSpan='6' id="marker9">{score.frame_10 && score.frame_10.frameScore ? score.frame_10.frameScore : null}</td>
         </tr>
       </tbody>
     </table>

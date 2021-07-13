@@ -14,10 +14,37 @@ class App extends React.Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleBowlChange = this.handleBowlChange.bind(this);
+    this.calculateScore = this.calculateScore.bind(this);
+  }
+
+  calculateScore() {
+    var frames = Object.fromEntries(Object.entries(this.state).filter(([key, value]) => key.slice(0, 5) === 'frame'));
+    console.log('frames:', frames);
+    var score = 0;
+
+    for (var frame in frames) {
+      console.log('key', frame, 'frames[key]', frames[frame]);
+      var frameTotals = frames[frame];
+      if (frameTotals.isStrike || frameTotals.roll_2 === '/') {
+        score += 10;
+        this.setState({ [frame]: { ...this.state.[frame], frameScore: score } });
+      } else if (frameTotals.roll_2) {
+        var rollOne = Number(frameTotals.roll_1);
+        var rollTwo = Number(frameTotals.roll_2);
+        console.log('rollOne', rollOne, 'rollTwo', rollTwo);
+        var frameScore = Number(frameTotals.roll_1) + Number(frameTotals.roll_2);
+        console.log('frameTotals', frameTotals);
+        score += frameScore;
+        this.setState({ [frame]: { ...this.state.[frame], frameScore: score } });
+      }
+
+
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
+    this.calculateScore();
     this.setState({bowl: ''});
   }
 
