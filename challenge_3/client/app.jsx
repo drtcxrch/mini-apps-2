@@ -8,7 +8,8 @@ class App extends React.Component {
     this.state = {
       pinsStanding: 10,
       score: 0,
-      currentFrame: 1
+      currentFrame: 1,
+      bowl: ''
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -17,27 +18,40 @@ class App extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.form.reset();
-
+    this.setState({bowl: ''});
   }
 
   handleBowlChange(e) {
-    var bowl = e.target.value;
+    var currentRoll = e.target.value;
     var frame = `frame_${this.state.currentFrame}`;
-    var currentFrame = this.state.currentFrame;
+    console.log(currentRoll);
 
-    if (!this.state.[frame]) {
-      this.setState({[frame]: {roll_1: bowl}}, () => console.log(this.state))
-    } else {
-      this.setState({[frame]: {...this.state.[frame], roll_2: bowl}}, () => {
-        var newFrame = this.state.currentFrame + 1;
-        this.setState({currentFrame: newFrame }, () => {
-          frame = `frame_${this.state.currentFrame + 1}`;
-          console.log(this.state)});
-      });
-
-    }
-
+    this.setState({bowl: currentRoll}, () => {
+      if (!this.state.[frame]) {
+        if (currentRoll === 'x') {
+          var newFrame = this.state.currentFrame + 1;
+          this.setState({ [frame]: { isStrike: true }, currentFrame: newFrame }, () => {
+            console.log(this.state);
+          });
+        } else {
+          this.setState({ [frame]: { roll_1: this.state.bowl }, pinsStanding: this.state.pinsStanding - currentRoll }, () => console.log(this.state))
+        }
+      } else if (this.state.pinsStanding - currentRoll < 0) {
+        alert(`Too many pins entered: please enter a number less than ${this.state.pinsStanding + 1}`)
+      } else {
+        if (this.state.pinsStanding - currentRoll === 0) {
+          console.log('true');
+          this.setState({ [frame]: { ...this.state.[frame], roll_2: '/', isSpare: true }, pinsStanding: 10 });
+        } else {
+          this.setState({ [frame]: { ...this.state.[frame], roll_2: this.state.bowl }, pinsStanding: 10 }, () => {
+            var newFrame = this.state.currentFrame + 1;
+            this.setState({ currentFrame: newFrame }, () => {
+              console.log(this.state)
+            });
+          });
+        }
+      }
+    });
   }
 
   render () {
@@ -49,12 +63,12 @@ class App extends React.Component {
           <form ref={form => this.form = form}
           onSubmit={this.handleSubmit}>
             <label>
-              Bowl:
+              Enter number of pins hit or an 'x' for a strike:
             <input
               type="text"
               className="roll-score"
-              placeholder="Enter Pin Count Here"
-              value={`this.state.frames.frame_${this.state.currentFrame}`.roll_1 === null ? `this.state.frames.frame_${this.state.currentFrame}`.roll_1 : `this.state.frames.frame_${this.state.currentFrame}`.roll_2}
+              placeholder="What did you roll?"
+              value={this.state.bowl}
               onChange={this.handleBowlChange}
               />
             </label>
